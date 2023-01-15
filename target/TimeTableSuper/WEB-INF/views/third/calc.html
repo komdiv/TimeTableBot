@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+Hello Calc
+<div>
+
+    <p> Answer is down:</p>
+
+    <p>x = <b th:text=${x}></b></p>
+    <p>y = <b th:text=${y}></b></p>
+
+<script>
+    function dw(text) {
+        document.write('well' + ${text});
+    }
+    dw("JavaScript");
+</script>
+
+    <p> Summa = <b th:text=${answer}></b></p>
+</div>
+
+</body>
+</html>

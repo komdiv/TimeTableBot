@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8" pageEncoding="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Show</title>
+</head>
+<body>
+<style>
+    #chat{
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 10px solid #ddd;
+
+    }
+    #listChats{
+    float:left;
+    width:1000px;
+    overflow-y: auto;
+    height: 500px;
+    }
+    #allChat{
+        border-collapse: collapse;
+        border-spacing: 10pt;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+    #inputNewMessage{
+        border-collapse: inherit;
+        border-spacing: 0pt;
+        width: 95%;
+        height: 50pt;
+        border: 1px solid #ddd;
+        vertical-align: text-top;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 2px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even){background-color: #f2f2f2}
+</style>
+<!--Here one person with id =-->
+<h3><i><b>Главная страница:</b></i></h3>
+
+<!--<div th:each="message:${chats}">-->
+<!--    <b th:text="${message.getText()}"> </b>-->
+<!--</div>-->
+
+<div>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <br>
+                    <!--<div th:text="@{Here one person with id = {id}, Name = {name}(id=${person.getId()} name=${personal.getName()})}"></div>-->
+                    <i>Имя:</i>
+                        <h2><p th:text="${person.getName()}"> </p><h2>
+<!--                        <h2><p th:text="@{{name}(name=${person.getName()})}"> </p><h2>-->
+                        <h5><p th:text="@{({param})(param=${person.getEmail()})}"> </p><h5>
+<!--                    <br>-->
+<!--                    <div th:text="@{Here one person with id = {id}, Name = {name}, email = {email} (id=${person.getId()}, name=${person.getName()}, email=${person.getEmail()}) }"></div>-->
+<!--                    <br>-->
+
+                    <!--<a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"> </a><br>-->
+                        <a th:href="@{/people/{id}/edit(id=${person.getId()})}"> редактировать </a>
+                            <br>
+                        <a th:href="@{/people}"> назад к списку </a>
+                    <br>
+                    <br>
+                    <!--<a th:href="@{/people/{id}/delete(id=${person.getId()})}"> Delete person</a>-->
+                    <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
+                        <button type="submit">Удалить</button>
+                    </form>
+                    <br>
+                    <br>
+                </div>
+            </td>
+<!--        </tr>-->
+<!--        <tr>-->
+            <td>
+                <div style="overflow-y:auto" id="listChats">
+                    <h2>Common CHAT:</h2>
+                    <table id="allChat">
+                        <thead>
+                        <tr>
+                            <td><b>Время</b></td>
+                            <td><b>ID абонента</b></td>
+                            <td><b>Имя</b></td>
+                            <td><b>Сообщение</b></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <div th:each="message:${chats}">
+
+                                    <tr>
+                                        <td><i th:text="${message.getTime()}"> </i></td>
+                                        <td><i th:text="${message.getPersonId()}"> </i></td>
+                                        <td><b th:text="${message.getPersonName()}"> </b> </td>
+        <!--                                <td><i th:text="${message.getChatId()}"> </i></td>-->
+        <!--                                <td><i th:text="${message.getPersonId()}"> </i></td>-->
+                                        <td><i th:text="${message.getText()}"> </i></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </td>
+        </tr>
+        <tr>
+
+                    <!--                    <div th:each="person:${people}">-->
+<!--                    <div th:each="message:${chats}">-->
+<!--                        <b th:text="${message.getText()}"> </b>-->
+<!--                        <table id = "chat">-->
+<!--                            <tr>-->
+<!--                                <td>-->
+<!--                                    <p>here text must be</p>-->
+<!--                                    <p th:text="${message.getText()}"> </p>-->
+
+
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                    </div>-->
+
+        </tr>
+    </table>
+</div>
+<br>
+<!--<form th:method="post" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${message}">-->
+<form th:method="post" th:action="@{/message}" th:object="${message}">
+<!--    <div class="col-75">-->
+    <div>
+        <input type="text" th:field="*{time}" placeholder="wright text here...">
+        <input type="text" th:field="*{text}" placeholder="Пишите здесь..." id="text" style="height:50px">
+<!--        <h2><p th:text="${person.getName()}"> </p><h2>-->
+<!--            <h2><p th:text="${person.getId()}"> </p></h2>-->
+<!--            <h2><p th:text="@{{id}(id=${person.getId()})}"> </p></h2>-->
+            <input type="hidden" th:value="${person.getId()}" th:name="personId">
+<!--             <input type="text" th:field="*{personId}" th:value="19">-->
+<!--            <input type="hidden" th:value="${person.getId()}" th:field="*{personId}">-->
+<!--            <input type="hidden" th:value="@{{id}(id=${person.getId()})}" th:field="*{personId}">-->
+<!--            <input type="text" value="01" th:field="*{personId}">-->
+<!--            "@{({param})(param=${person.getEmail()})}-->
+
+<!--        <input type="text" th:field="*{personId}" value="norm" placeholder="Enter User name" name="uname" id="name">-->
+<!--        <input type="text" th:field="*{personId}" value="${person.getId()}" placeholder="Enter User name" name="uname" id="name">-->
+<!--        <input type="text" th:field="*{name}" placeholder="Enter User name" name="uname" id="name">-->
+<!--        <textarea type="text" name="subject" th:field="*{text}" placeholder="Пишите здесь..." style="height:50px" id="inputNewMessage"></textarea>-->
+<!--        <input type="hidden" th:field="*{personName}" value="${person.getName()}">-->
+    </div>
+    <input type="submit" value="Отправить сообщение">
+</form>
+
+
+
+
+<!--<button th:onclick="window.location.href=@{/people/{id}/edit(id=${person.getId()})}">Edit</button>-->
+</body>
+</html>
