@@ -30,6 +30,14 @@ public class PeopleController {
         this.messageDAO = messageDAO;
     }
 
+    @GetMapping("successPage")
+    public String wellDone(Model model){
+        System.out.println("мы в контроллере wellDone()");
+        model.addAttribute("pathPicture_01", "/rtt.jpg");
+        System.out.println("в модели лежит =>" + model.getAttribute("pathPicture_01"));
+        return "people/successPage";
+    }
+
     @GetMapping()
     public String index(Model model){
         System.out.println("мы в контроллере INDEX");
